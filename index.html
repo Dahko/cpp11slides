@@ -487,6 +487,27 @@ b.setCallback([](int v) { logClick(v); });
 		    </code></pre>
 		</section>
 		
+		<section>
+		    <h2>std::function real world example</h2>
+		    <p>В Palign.dll был класс CSimplex, делающий минимизацию по многим переменным. Он принимал на вход функцию, которую нужно было минимизировать, и варьировал ее аргументы до достижения минимума.</p>
+		    <pre><code data-trim class="cpp">
+typedef double (*FuncToMinimize) (double*);
+class CSimplex  
+{
+public:
+    CSimplex(FuncToMinimize, int, double*, double, bool _bound = false, ...);
+    ...
+};
+		    </code></pre>
+		    <p>В какой-то момент понадобилось передавать туда не функцию, а функтор, имеющий ссылки на другие объекты. В указатель на функцию такое в принципе не передашь - разве только вводить глобальные объекты.</p>
+		    <pre><code data-trim class="cpp">
+public:
+    CSimplex(std::function&lt;double(double*)&gt;, int, double*, double, bool _bound = false, ...);
+		    </code></pre>
+		    <p>Альтернативное решение - передавать указатель на функтор IFuncToMinimize с функцией virtual double operator() (double*)</p>
+		</section>
+
+
 
 		</section> <!-- // std::function -->
 
@@ -538,6 +559,20 @@ ISerializableFace* CReflectSeriazableFactoryFace::MakeSerializableObject(
 }
 		    </code></pre>
 
+		</section>
+
+		<section>
+		    <h2>Паттерн "Command"</h2>
+		    <p>Callback после чтения объекта сериализатором из файла</p>
+		    <pre><code data-trim class="cpp">
+new CPolyhedronSer(m_phModel, 
+                   [this](POLYHEDRON* model) {
+                       this->SetPOLYHEDRONByCloning(model); 
+                       delete model;
+                   } 
+);
+
+		    </code></pre>
 		</section>
 
 		<section>
