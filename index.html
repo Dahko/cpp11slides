@@ -645,7 +645,95 @@ const auto priority = [=]()-&gt;Priority {
 
 		</section> <!-- real-world lambda usage -->
 
+		<!--
+		*
+		* 
+		* Override
+		*
+		*
+		-->
 
+		<section>
+		<section class="center">
+			<h2>override</h2>
+		</section>
+
+		<section>
+		<h2>override</h2>
+		<pre><code data-trim class="cpp">
+class IDocumentNode : public IOctInterface {
+public:
+    // List of sub-nodes
+    virtual unsigned ChildCount() const = 0;
+    virtual IDocumentNode* Child(unsigned i) = 0;
+    virtual void AddChild(IDocumentNode * pChild) = 0;
+	...
+};
+		</code></pre>
+		<pre><code data-trim class="cpp">
+
+class TDocumentNodeLeaf : public IDocumentNode {
+public:
+  virtual size_t ChildCount() const { return 0;} ;
+  virtual IDocumentNode* Child(size_t i) { return NULL; };
+  virtual void AddChild(IDocumentNode *) { return; }
+  ...
+};
+
+class TDocumentNodeFolder : public TDocumentNodeLeaf {
+public:
+  virtual size_t ChaildCount() const { return m_vChilds.size(); } 
+  virtual IDocumentNode* Child(int i) { 
+      return m_vChilds[i];
+    };
+  ...
+}
+		</code></pre>
+		<div class="fragment fade-in">
+		<pre class="fragment fade-out"><code data-trim class="cpp">
+TDocumentNodeFolder obj;
+obj.AddChild(something);
+std::cout &lt;&lt; obj.ChildCount();	// prints 0 !!!
+		</code></pre>
+		</div>
+		</section>
+
+		<section>
+		<h2>override</h2>
+		<pre><code data-trim class="cpp">
+class IDocumentNode : public IOctInterface {
+public:
+    // List of sub-nodes
+    virtual unsigned ChildCount() const = 0;
+    virtual IDocumentNode* Child(unsigned i) = 0;
+    virtual void AddChild(IDocumentNode * pChild) = 0;
+	...
+};
+		</code></pre>
+		<pre><code data-trim class="cpp">
+class TDocumentNodeLeaf : public IDocumentNode {
+public:
+  virtual size_t ChildCount() const override { return 0;} ;
+  virtual IDocumentNode* Child(size_t i) override { return NULL; };
+  virtual void AddChild(IDocumentNode *) override { return; }
+  ...
+};
+
+class TDocumentNodeFolder : public TDocumentNodeLeaf {
+public:
+  virtual size_t ChaildCount() const override { return m_vChilds.size(); } 
+  virtual IDocumentNode* Child(int i) override { 
+      return m_vChilds[i];
+    };
+  ...
+}
+
+		</code></pre>
+		<p class="fragment">error C3668: 'TDocumentNodeFolder::ChaildCount' : method with override specifier 'override' did not override any base class methods</p>
+		<div class="stretch"/>
+		</section>
+
+		</section> <!-- override -->
 
 
 
