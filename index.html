@@ -73,13 +73,12 @@
 
 		<section>
 		<section class="center">
-			<h2>Lambda expressions</h2>
+			<h2>Lambda-выражения</h2>
 		</section>
 
 		<section>
 			<h2>Lambda expressions basics</h2>
-			<p><br/></p>
-			<p>A quick way to create function objects at their point of use.</p>
+			<p>Быстрый способ создать функцию в точке ее использования</p>
 			<pre><code data-trim class="cpp">
 std::vector&lt;int&gt; v;
 …
@@ -87,7 +86,7 @@ auto it = std::find_if(v.cbegin(), v.cend(),
                        [](int i) { return i &gt; 0 &amp;&amp; i &lt; 10; });	
 
 			</code></pre>
-			<p>Essentially generates:</p>
+			<p>Генерирует примерно следующее:</p>
 			<pre><code data-trim class="cpp">
 class MagicType1 {
 public:
@@ -99,8 +98,7 @@ auto it = std::find_if(v.cbegin(), v.cend(), MagicType1());
 
 		<section data-transition="none">
 			<h2>Lambda expressions basics</h2>
-			<p><br/></p>
-			<p>A quick way to create function objects at their point of use.</p>
+			<p>Быстрый способ создать функцию в точке ее использования</p>
 			<pre><code data-trim class="cpp">
 std::map&lt;Solution*, int&gt; mapSolID;
 ...
@@ -127,8 +125,7 @@ public:
 		</section>
 		<section data-transition="none">
 			<h2>Lambda expressions basics</h2>
-			<p><br/></p>
-			<p>A quick way to create function objects at their point of use.</p>
+			<p>Быстрый способ создать функцию в точке ее использования</p>
 			<pre><code data-trim class="cpp">
 std::map&lt;Solution*, int&gt; mapSolID;
 ...
@@ -156,8 +153,7 @@ public:
 
 		<section data-transition="none">
 			<h2>Lambda expressions basics</h2>
-			<p><br/></p>
-			<p>A quick way to create function objects at their point of use.</p>
+			<p>Быстрый способ создать функцию в точке ее использования</p>
 			<pre><code data-trim class="cpp">
 std::map&lt;Solution*, int&gt; mapSolID;
 ...
@@ -188,9 +184,8 @@ itInt = std::find_if(mapSolID.begin(), mapSolID.end(),
 		</section>
 		<section>
 		    <h2>Lambdas as closures</h2>
-		    <p><br/></p>
-		    <p>Function object created through lambda expressions <br/>are <span class="hl">closures</span>.<br/>
-		    Closures may outlive their scope:
+		    <p>Функциональные объекты, задаваемые лямбдами, <br/>называются замыканиями (<span class="hl">closures</span>).<br/>
+		    Замыкания могут существовать вне исходногно контекста (scope):
 		    </p>
 		    <pre><code data-trim class="cpp">
 std::function&lt;bool(int)&gt; returnClosure(int a) {
@@ -201,19 +196,18 @@ std::function&lt;bool(int)&gt; returnClosure(int a) {
 
 auto f = returnClosure(10);
 		    </code></pre>
-		    <p>In this call:</p>
+		    <p>Вот тут</p>
 		    <pre><code data-trim class="cpp">
 		    if(f(22) == true) { //... }
 		    </code></pre>
-		    <p>What are a, b, c? <br/>
-		    <code>returnClosure</code> no longer active!</p>
+		    <p>чему равны a, b, c? <br/>
+		    Му же уже вышли из <code>returnClosure</code>!</p>
 
 		</section>
 
 		<section>
 		    <h2>Lambdas as closures</h2>
-		    <p><br/></p>
-		    <p>Static and global data is “ok”:</p>
+		    <p>Со статическими и глобальными переменными все "нормально":</p>
 		    <pre><code data-trim class="cpp">
 int a; 
 std::function&lt;bool(int)&gt; returnClosure() {
@@ -223,13 +217,12 @@ std::function&lt;bool(int)&gt; returnClosure() {
 }
   auto f = returnClosure(10);
 		    </code></pre>
-		    <p>Otherwise local variables have to be <span class="hl">captured</span></p>
+		    <p>А локльные переменные надо специально захватывать (<span class="hl">capture</span>).</p>
 		</section>
 
 		<section>
 		    <h2>Capturing local variables</h2>
-		    <p><br/></p>
-		    <p>Capturing locals puts copies in closures:</p>
+		    <p>Захваченная переменная копируется в closure. Следующий код</p>
 		    <pre><code data-trim class="cpp">
 {
     int minVal;
@@ -241,7 +234,7 @@ std::function&lt;bool(int)&gt; returnClosure() {
     );
 }
 		    </code></pre>
-		    <p>Essentially corresponds to:</p>
+		    <p>геренирует</p>
 		    <pre><code data-trim class="cpp">
 class MagicType {
 public:
@@ -256,8 +249,7 @@ auto it = std::find_if(v.cbegin(), v.cend(), MagicType(minVal, maxVal));
 		</section>
 		<section>
 		    <h2>Capturing local variables</h2>
-		    <p><br/></p>
-		    <p>Capturing locals puts copies in closures:</p>
+		    <p>Захваченная переменная копируется в closure. Следующий код</p>
 		    <pre><code data-trim class="cpp">
 {
     int minVal;
@@ -269,7 +261,7 @@ auto it = std::find_if(v.cbegin(), v.cend(), MagicType(minVal, maxVal));
     );
 }
 		    </code></pre>
-		    <p>Essentially corresponds to:</p>
+		    <p>геренирует</p>
 		    <pre><code data-trim class="cpp">
 class MagicType {
 public:
@@ -284,8 +276,7 @@ auto it = std::find_if(v.cbegin(), v.cend(), MagicType(minVal, maxVal));
 		</section>
 		<section>
 		    <h2>Capturing local variables</h2>
-		    <p><br/></p>
-		    <p>Capture mode defaults may be specified:</p>
+		    <p>Можно прописать захват всех переменных по умолчанию:</p>
 		    <pre><code data-trim class="cpp">
 auto it = std::find_if( v.cbegin(), v.cend(),   // default is
                       [=](int i)                // by value
@@ -294,7 +285,7 @@ auto it = std::find_if( v.cbegin(), v.cend(),   // default is
                       [&amp;](int i)                // by ref
                       { return i &gt; minVal &amp;&amp; i &lt; maxVal; });
 		    </code></pre>
-		    <p>Default overridable on a per-variable basis:</p>
+		    <p>При этом можно указать другой способ захвата для отдельных переменных:</p>
 		    <pre><code data-trim class="cpp">
 auto it = std::find_if(v.cbegin(), v.cend(),
                        [=, &amp;maxVal](int i) 
@@ -305,23 +296,21 @@ auto it = std::find_if(v.cbegin(), v.cend(),
 
 		<section>
 		    <h2>Lambda Return Types</h2>
-		    <p><br/></p>
 <div class="left">
-		    <p>Optional when:</p>
+		    <p>Тип возвращаемого значания указывать не нужно, если:</p>
 		    <ul>
-			<li>Return type is void.</li>
-			<li>Lambda body is “return expr;”
-			    <ul><li>Return type is that of expr.</li></ul>
+			<li>лямбда возвращает void;</li>
+			<li>тело лямбды представляет собой “return expr;”
+			    <ul><li>(тогда возвращаемым типом считается тип expr).</li></ul>
 			</li>
 		    </ul>
-		    <p><br/></p>
-		    <p>Otherwise must be specified via trailing return type syntax:</p>
+		    <p>Иначе надо указывать явно через "trailing return type syntax":</p>
 </div>
 		    <pre><code data-trim class="cpp">
 std::vector&lt;double&gt; v;
 &hellip;
 std::transform(v.begin(), v.end(), v.begin(),
-              [](double d)-&gt;double
+              [](double d) -&gt; double
               {
                   makeLogEntry(&quot;std::transform&quot;, d);
                   return std::sqrt(std::abs(d));
@@ -333,8 +322,7 @@ std::transform(v.begin(), v.end(), v.begin(),
 
 		<section>
 		    <h2>C++14</h2>
-		    <p><br/></p>
-		    <p>Return type deduction valid for <span class="hl">all</span> functions. Argument type deducion.</p>
+		    <p>Возвращаемы тип вычисляется автоматически (для <span class="hl">всех</span> функций). Аргументы лямбд тоже вычисляются.</p>
 		    <pre><code data-trim class="cpp">
 auto magicValue1(int seed) // both returns are int
 {
@@ -347,7 +335,7 @@ std::partition( d.begin(), d.end(),
                   return false; }
 );
 		    </code></pre>
-		    <p>Init captures</p>
+		    <p>Init captures (захват через инициализацию)</p>
 		    <pre><code data-trim class="cpp">
 return [ minVal = computeMinVal(this-&gt;minSeed) ] (int x)
        { return minVal &lt;= x };
@@ -357,14 +345,12 @@ return [ minVal = computeMinVal(this-&gt;minSeed) ] (int x)
 
 		<section>
 		    <h2>Тонкости</h2>
-		    <p><br/></p>
 		    <ul>
 			<li>Захват членов класса (надо захватывать this, по значению невозможно)</li>
 			<li>У лямбды без параметров скобки можно опустить: <br/>[]{ //body }</li>
 			<li>Лямбды могут все, что и обычные функции. Но Скотт рекомендует не увлекаться и писать короткие, понятные лямбды, вытекающие из контекста.</li>
 			<li>Лямбды по умолчанию константны, но бывают mutable lambdas.</li>
 		    </ul>
-		    <p><br/></p>
 		</section>
 
 		</section> <!-- // lambdas as closures-->
@@ -384,21 +370,19 @@ return [ minVal = computeMinVal(this-&gt;minSeed) ] (int x)
 
 		<section>
 		    <h2>Storing lambdas</h2>
-		    <p><br/></p>
 		    <p>Ранее мы рассматривали простые примеры, когда лямбда создается и сразу же используется в алгоритме stl.</p>
 		    <pre><code data-trim class="cpp">
 std::vector&lt;int&gt; v;
 …
 auto it = std::find_if(v.cbegin(), v.cend(),
-		       [](int i) { return i &gt; 0 &amp;&amp; i &lt; 10; });	
+                       [](int i) { return i &gt; 0 &amp;&amp; i &lt; 10; });	
 		    </code></pre>
 		    <p>Когда мы обсуждали захват переменных, было понятно, что захват по значению нужен именно для отложенного запуска лямбд.</p>
 		    <p>Как же хранить лямбды?</p> 
 		</section>
 
 		<section>
-		    <h2>Auto</h2>
-		    <p><br/></p>
+		    <h2>auto</h2>
 		    <pre><code data-trim class="cpp">
 ??? fn = [](MyClass* x) { return x-&gt;IsGood(); }
 		    </code></pre>
@@ -413,8 +397,8 @@ std::map&lt;int, std::string&gt; m;
 auto i1 = m.begin(); // i1: std::map&lt;int, std::string&gt;::iterator
 for(auto i = m.begin(); i!=m.end(); i++) { i-&gt;second+="!"; }
 		    </code></pre>
-		    <p>Auto variables have the type of their initializing expression.</p>
-		    <p>Const/volatile and reference/pointer adornments may be added:</p>
+		    <p>"auto" переменные имеют тип инициализирующего их выражения.</p>
+		    <p>Можно добавлять const/volatile и reference/pointer:</p>
 		    <pre><code data-trim class="cpp">
 const auto *x2 = &x1; // x2: const int*
 const auto& i2 = m;   // i2: const std::map&lt;int, std::string&gt;&
@@ -426,7 +410,6 @@ auto ci = m.cbegin(); // ci: std::map&lt;int, std::string&gt;::const_iterator
 
 		<section>
 		    <h2>std::function</h2>
-		    <p><br/></p>
 		    <pre><code data-trim class="cpp">
 std::function&lt;int(std::string&amp;)&gt; f;     // f refers to callable entity
                                         // compatible with given sig.
@@ -463,7 +446,7 @@ std::function&lt;void(std::string)&gt; fn = myFn1;
 		</section>
 
 		<section>
-		    <h2>std::function callback example</h2>
+		    <h2>std::function - использование в callback'ах</h2>
 		    <pre><code data-trim class="cpp">
 class Button: public SomeGUIFrameworkBaseClass {
 public:
@@ -488,7 +471,7 @@ b.setCallback([](int v) { logClick(v); });
 		</section>
 		
 		<section>
-		    <h2>std::function real world example</h2>
+		    <h2>std::function - пример из жизни</h2>
 		    <p>В Palign.dll был класс CSimplex, делающий минимизацию по многим переменным. Он принимал на вход функцию, которую нужно было минимизировать, и варьировал ее аргументы до достижения минимума.</p>
 		    <pre><code data-trim class="cpp">
 typedef double (*FuncToMinimize) (double*);
@@ -521,12 +504,11 @@ public:
 
 		<section>
 		<section class="center">
-		<h2>Real-world lambda usage</h2>
+		<h2>Лямбды в реальной жизни</h2>
 		</section>
 
 		<section>
-		<h2>"Command" pattern</h2>
-		<p><br/></p>
+		<h2>Паттерн "Command"</h2>
 		    <pre><code data-trim class="cpp">
 class CReflectSeriazableFactoryFace {
 public:
@@ -576,8 +558,7 @@ new CPolyhedronSer(m_phModel,
 		</section>
 
 		<section>
-		<h2>Functional programming</h2>
-		<p><br/></p>
+		<h2>Функциональное программирование</h2>
 		    <pre><code data-trim class="cpp">
 std::map&lt;int, std::string&gt; m;
 typedef m::value_type MyMapVal;
@@ -594,7 +575,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		    </code></pre>
 		<div>
 		<div class="fragment">
-		    <p>Функциональный стиль - максимально ограничиваем множество доступные коду данных, чтобы минимизировать побочные эффекты. Такой код надежнее и легче тестируется.</p>
+		    <p>Функциональный стиль - максимально ограничиваем множество доступных коду данных, чтобы минимизировать побочные эффекты. В идеале вообще без переменных. Такой код надежнее и легче тестируется.</p>
 		    <p>Коду внутри лямбд доступны только их параметры и захваченные переменные (поэтому лучше избегать [&] и [=]).</p>
 		<div>
 		</section>
@@ -602,8 +583,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 
 		<section>
 		<h2>Haskell</h2>
-		<p><br/></p>
-		<p>Неплохой язык для знакомства с функциональный программированием.</p>
+		<p>Неплохой язык для знакомства с функциональный программированием</p>
 		<p><br/></p>
 		<p>Ресурсы:</p>
 		<ul>
@@ -614,8 +594,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		</section>
 
 		<section>
-		<h2>Lambdas as const initializers</h2>
-		<p><br/></p>
+		<h2>Инициализация константных переменных</h2>
 		<pre><code data-trim class="cpp">
 const auto sortedInts = []()-&gt;std::vector&lt;int&gt; { // init const vector
     std::vector&lt;int&gt; v(NUM_VALUES); // w/NUM_VALUES
