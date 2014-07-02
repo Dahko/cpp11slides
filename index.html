@@ -514,8 +514,10 @@ public:
 		<h2>Лямбды в реальной жизни</h2>
 		</section>
 
+
 		<section>
 		<h2>Паттерн "Command"</h2>
+		<p>Хранение генерирующих функций фабрики</p>
 		    <pre><code data-trim class="cpp">
 class CReflectSeriazableFactoryFace {
 public:
@@ -585,6 +587,20 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		    <p>Функциональный стиль - максимально ограничиваем множество доступных коду данных, чтобы минимизировать побочные эффекты. В идеале вообще без переменных. Такой код надежнее и легче тестируется.</p>
 		    <p>Коду внутри лямбд доступны только их параметры и захваченные переменные (поэтому лучше избегать <code class="code">[&]</code> и <code class="code">[=]</code>).</p>
 		<div>
+		</section>
+
+		<section class="center">
+		<h2>Использование в STL-алгоритмах</h2>
+		<p>Примеров испльзования лямбд в STL-алгоритмах выше было множество.</p><p>С приходом лямбд можно расширить количество алгоритмов, которые мы повседневно используем, а не писать циклы вручную.</p>
+		<ul>
+		    <li>for_each / transform</li>
+		    <li>find_if / count_if</li>
+		    <li>remove_if / copy_if</li>
+		    <li>generate</li>
+		    <li>accumulate</li>
+		    <li>partition</li>
+		    <li>max_element / min_element</li>
+		</ul>
 		</section>
 
 
