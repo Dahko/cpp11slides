@@ -37,6 +37,13 @@
 	    .center11 { vertical-align: middle; }
 	    .center11 * { vertical-align: middle; }
 	    .hl { color: red; }
+	    code.code {
+		white-space: pre-wrap;
+		padding: 1px 5px;
+		font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+		background-color: #eee;
+	    }
+
 	</style>
 
 
@@ -201,7 +208,7 @@ auto f = returnClosure(10);
 		    if(f(22) == true) { //... }
 		    </code></pre>
 		    <p>чему равны a, b, c? <br/>
-		    Му же уже вышли из <code>returnClosure</code>!</p>
+		    Му же уже вышли из <code class="code">returnClosure</code>!</p>
 
 		</section>
 
@@ -346,8 +353,8 @@ return [ minVal = computeMinVal(this-&gt;minSeed) ] (int x)
 		<section>
 		    <h2>Тонкости</h2>
 		    <ul>
-			<li>Захват членов класса (надо захватывать this, по значению невозможно)</li>
-			<li>У лямбды без параметров скобки можно опустить: <br/>[]{ //body }</li>
+			<li>Захват членов класса (надо захватывать <code class="code">this</code>, по значению невозможно)</li>
+			<li>У лямбды без параметров скобки можно опустить: <br/><code class="code">[]{ //body }</code></li>
 			<li>Лямбды могут все, что и обычные функции. Но Скотт рекомендует не увлекаться и писать короткие, понятные лямбды, вытекающие из контекста.</li>
 			<li>Лямбды по умолчанию константны, но бывают mutable lambdas.</li>
 		    </ul>
@@ -487,7 +494,7 @@ public:
 public:
     CSimplex(std::function&lt;double(double*)&gt;, int, double*, double, bool _bound = false, ...);
 		    </code></pre>
-		    <p>Альтернативное решение - передавать указатель на функтор IFuncToMinimize с функцией virtual double operator() (double*)</p>
+		    <p>Альтернативное решение - передавать указатель на функтор <code class="code">IFuncToMinimize</code> с функцией <code class="code">virtual double operator() (double*)</code></p>
 		</section>
 
 
@@ -576,7 +583,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		<div>
 		<div class="fragment">
 		    <p>Функциональный стиль - максимально ограничиваем множество доступных коду данных, чтобы минимизировать побочные эффекты. В идеале вообще без переменных. Такой код надежнее и легче тестируется.</p>
-		    <p>Коду внутри лямбд доступны только их параметры и захваченные переменные (поэтому лучше избегать [&] и [=]).</p>
+		    <p>Коду внутри лямбд доступны только их параметры и захваченные переменные (поэтому лучше избегать <code class="code">[&]</code> и <code class="code">[=]</code>).</p>
 		<div>
 		</section>
 
@@ -595,6 +602,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 
 		<section>
 		<h2>Инициализация константных переменных</h2>
+		<p>Переменная не должна меняться по смыслу, но ее иницаилизация не укладывается в <code class="code">a = expr</code>.</p>
 		<pre><code data-trim class="cpp">
 const auto sortedInts = []()-&gt;std::vector&lt;int&gt; { // init const vector
     std::vector&lt;int&gt; v(NUM_VALUES); // w/NUM_VALUES
@@ -611,6 +619,7 @@ const auto priority = [=]()-&gt;Priority {
     return p;
 }();
 		</code></pre>
+		<p>Это тоже трюк из функционального программирования - там по-другому нельзя.</p>
 		</section>
 
 
