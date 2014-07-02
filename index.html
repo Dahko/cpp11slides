@@ -31,7 +31,7 @@
 	    }
 	</script>
 	<style type="text/css">
-	    p { text-align: left; }
+	    .left { text-align: left; }
 	    .hcenter { text-align: center; }
 	    .hcenter *{ text-align: center; }
 	    .center11 { vertical-align: middle; }
@@ -306,6 +306,7 @@ auto it = std::find_if(v.cbegin(), v.cend(),
 		<section>
 		    <h2>Lambda Return Types</h2>
 		    <p><br/></p>
+<div class="left">
 		    <p>Optional when:</p>
 		    <ul>
 			<li>Return type is void.</li>
@@ -315,6 +316,7 @@ auto it = std::find_if(v.cbegin(), v.cend(),
 		    </ul>
 		    <p><br/></p>
 		    <p>Otherwise must be specified via trailing return type syntax:</p>
+</div>
 		    <pre><code data-trim class="cpp">
 std::vector&lt;double&gt; v;
 &hellip;
