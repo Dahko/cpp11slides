@@ -423,6 +423,69 @@ auto ci = m.cbegin(); // ci: std::map&lt;int, std::string&gt;::const_iterator
 		    <p>Выведение типа аналогично выведению типа в шаблонах.</p>
 		    </div>
 		</section>
+
+		<section>
+		    <h2>std::function</h2>
+		    <p><br/></p>
+		    <pre><code data-trim class="cpp">
+std::function&lt;int(std::string&amp;)&gt; f;     // f refers to callable entity
+                                        // compatible with given sig.
+int someFunc(std::string&amp;);             // some function
+f = someFunc;                           // f refers to someFunc
+f = [](std::string &amp;s)-&gt;unsigned
+    { s += &quot;!&quot;; return s.size(); };     // f refers to a closure
+class Gadget {
+public:
+int operator()(std::string&amp;);           // function call operator
+…
+};
+Gadget g;
+f = g;                                  // f refers to g
+		    </code></pre>
+		    <p>std::function - универсальное представление вызываемого объекта<br/>(callable entity)</p>
+		</section>
+
+		<section>
+		    <h2>std::function</h2>
+		    <img style="border:0;" src="img/std_function.png"/>
+		    <pre><code data-trim class="cpp">
+bool myFn(int n, MyClass* obj) { //... }
+
+std::function&lt;bool(int, MyClass*)&gt; fn = myFn;
+		    </code></pre>
+		    <pre class="fragment"><code data-trim class="cpp">
+bool myFn1(std::string str) { //... }
+void myFn2(const char* str) { //... }
+
+std::function&lt;void(std::string)&gt; fn = myFn1;
+                                 fn = myFn2;
+		    </code></pre>
+		</section>
+
+		<section>
+		    <h2>std::function callback example</h2>
+		    <pre><code data-trim class="cpp">
+class Button: public SomeGUIFrameworkBaseClass {
+public:
+&hellip;
+    using CallbackType = std::function&lt;void(short)&gt;;
+    void setCallback(const CallbackType&amp; cb)
+    {
+        clickHandler = cb;
+    }
+    virtual void onClick(short upOrDown) // invoked by base class
+    {
+        clickHandler(upOrDown); // invoke function object
+    }
+private:
+    CallbackType clickHandler;
+};
+		    </code></pre>
+		    <pre><code data-trim class="cpp">
+Button b;
+b.setCallback([](int v) { logClick(v); });
+		    </code></pre>
+		</section>
 		
 
 		</section> <!-- // std::function -->
@@ -497,7 +560,7 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		<div>
 		<div class="fragment">
 		    <p>Функциональный стиль - максимально ограничиваем множество доступные коду данных, чтобы минимизировать побочные эффекты. Такой код надежнее и легче тестируется.</p>
-		    <p>Коду внутри лямбд доступны только их параметры и захваченные переченные (поэтому лучше избегать [&] и [=]).</p>
+		    <p>Коду внутри лямбд доступны только их параметры и захваченные переменные (поэтому лучше избегать [&] и [=]).</p>
 		<div>
 		</section>
 
@@ -505,15 +568,36 @@ std::foreach(m.begin(), m.end(), [](MyMapVal & i) { i.second+="!"; /*i++;*/ }
 		<section>
 		<h2>Haskell</h2>
 		<p><br/></p>
-		<p>Неплохой язык для знакомства с функциональный программированием - Haskell.</p>
+		<p>Неплохой язык для знакомства с функциональный программированием.</p>
+		<p><br/></p>
 		<p>Ресурсы:</p>
 		<ul>
 			<li><a href="http://learnyouahaskell.com">http://learnyouahaskell.com</a> - превосходный учебник</li>
 			<li><a href="http://www.haskell.org/haskellwiki/99_questions">http://www.haskell.org/haskellwiki/99_questions</a> - обучающие задачи, от простого к сложному</li>
-			<li><a href="https://www.fpcomplete.com">https://www.fpcomplete.com</a> - online-IDE</li>
+			<li><a href="https://www.fpcomplete.com">https://www.fpcomplete.com</a> - online-IDE, где можно эти задачи порешать</li>
 		</ul>
 		</section>
 
+		<section>
+		<h2>Lambdas as const initializers</h2>
+		<p><br/></p>
+		<pre><code data-trim class="cpp">
+const auto sortedInts = []()-&gt;std::vector&lt;int&gt; { // init const vector
+    std::vector&lt;int&gt; v(NUM_VALUES); // w/NUM_VALUES
+    std::iota(v.begin(), v.end(), 0-NUM_VALUES/2); // sequential ints
+    return v; // centered at 0
+}();
+
+const auto priority = [=]()-&gt;Priority {
+    makeLogEntry(&quot;Initializing priority&quot;);
+    auto cInfo = getCustomerInfo(customerID);
+    Priority p = (cInfo.salesInLast12Months() &lt; bonusThreshhold)
+    ? normalPriority
+    : highPriority;
+    return p;
+}();
+		</code></pre>
+		</section>
 
 
 
